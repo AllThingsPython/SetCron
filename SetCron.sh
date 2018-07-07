@@ -16,6 +16,34 @@ Hourly () {
 	echo "Cron entry added"
 }
 
+Weekly () {
+
+        echo -n "Enter day of the week [0-6]: "
+        read input_week
+        echo $input_week | egrep "^[0-6]$"
+
+        if [ $? -ne 0 ]; then
+        echo "Invalid day of the week !!!"
+        exit 1
+        fi
+
+        echo -n "Enter time of the day in 24 hour format [hh:mm]: "
+        read input_time
+        echo $input_time | egrep "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
+
+        if [ $? -ne 0 ]; then
+        echo "Invalid time entered !!!"
+        exit 1
+        fi
+
+        hh=`echo $input_time | awk -F: '{ print $1;}'`
+        mm=`echo $input_time | awk -F: '{ print $2;}'`
+
+        printf "%s %s * * %s %s\n" $mm $hh $input_week $cmd_str >> /var/spool/cron/$cron_usr
+	echo ""
+	echo "Cron entry added"
+}
+
 ### Check uid of user
 
 tmp_uid=`id | awk '{ print $1;}' | sed 's/uid=\([0-9]\+\)(.*/\1/'`
@@ -68,6 +96,7 @@ d) echo "daily function executed"
    ;;
 
 w) echo "weekly function executed"
+   Weekly
    ;;
 
 *) echo "wrong choice !!!"
