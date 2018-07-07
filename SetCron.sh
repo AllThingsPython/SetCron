@@ -1,5 +1,21 @@
 #! /usr/bin/bash
 
+Hourly () {
+
+	echo -n "Enter time in mins [00-59]: "
+	read input_time
+	echo $input_time | egrep "^[0-5][0-9]$"
+
+        if [ $? -ne 0 ]; then
+        echo "Invalid time entered !!!"
+        exit 1
+        fi
+
+	printf "%s * * * * %s\n" $input_time $cmd_str >> /var/spool/cron/$cron_usr
+	echo ""
+	echo "Cron entry added"
+}
+
 ### Check uid of user
 
 tmp_uid=`id | awk '{ print $1;}' | sed 's/uid=\([0-9]\+\)(.*/\1/'`
@@ -45,6 +61,7 @@ read interval_choice
 case "$interval_choice" in
 
 h) echo "hourly function executed"
+   Hourly
    ;;
 
 d) echo "daily function executed"
