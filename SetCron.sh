@@ -2,37 +2,48 @@
 
 Hourly () {
 
+	echo ""
 	echo -n "Enter time in mins [00-59]: "
 	read input_time
-	echo $input_time | egrep "^[0-5][0-9]$"
+	echo ""
+
+	echo $input_time | egrep "^[0-5][0-9]$" >> /dev/null
 
         if [ $? -ne 0 ]; then
         echo "Invalid time entered !!!"
+	echo ""
         exit 1
         fi
 
 	printf "%s * * * * %s\n" $input_time $cmd_str >> /var/spool/cron/$cron_usr
+	echo "Cron entry added successfully"
 	echo ""
-	echo "Cron entry added"
 }
 
 Weekly () {
 
+	echo ""
         echo -n "Enter day of the week [0-6]: "
         read input_week
-        echo $input_week | egrep "^[0-6]$"
+	echo ""
+
+        echo $input_week | egrep "^[0-6]$" >> /dev/null
 
         if [ $? -ne 0 ]; then
         echo "Invalid day of the week !!!"
+	echo ""
         exit 1
         fi
 
         echo -n "Enter time of the day in 24 hour format [hh:mm]: "
         read input_time
-        echo $input_time | egrep "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
+	echo ""
+
+        echo $input_time | egrep "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" >> /dev/null
 
         if [ $? -ne 0 ]; then
         echo "Invalid time entered !!!"
+	echo ""
         exit 1
         fi
 
@@ -40,18 +51,22 @@ Weekly () {
         mm=`echo $input_time | awk -F: '{ print $2;}'`
 
         printf "%s %s * * %s %s\n" $mm $hh $input_week $cmd_str >> /var/spool/cron/$cron_usr
+	echo "Cron entry added successfully"
 	echo ""
-	echo "Cron entry added"
 }
 
 Daily () {
 
+	echo ""
         echo -n "Enter time of the day in 24 hour format [hh:mm]: "
         read input_time
-        echo $input_time | egrep "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
+	echo ""
+
+        echo $input_time | egrep "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" >> /dev/null
 
         if [ $? -ne 0 ]; then
         echo "Invalid time entered !!!"
+	echo ""
         exit 1
         fi
 
@@ -59,8 +74,8 @@ Daily () {
         mm=`echo $input_time | awk -F: '{ print $2;}'`
 
         printf "%s %s * * * %s\n" $mm $hh $cmd_str >> /var/spool/cron/$cron_usr
-        echo ""
-        echo "Cron entry added"
+        echo "Cron entry added successfully"
+	echo ""
 }
 
 ### Check uid of user
