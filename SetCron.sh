@@ -1,5 +1,7 @@
 #! /usr/bin/bash
 
+### Function to add cron entry for hourly tasks
+
 Hourly () {
 
 	echo ""
@@ -19,6 +21,9 @@ Hourly () {
 	echo "Cron entry added successfully"
 	echo ""
 }
+
+
+### Function to add cron entry for weekly tasks
 
 Weekly () {
 
@@ -55,6 +60,9 @@ Weekly () {
 	echo ""
 }
 
+
+### Function to add cron entry for daily tasks
+ 
 Daily () {
 
 	echo ""
