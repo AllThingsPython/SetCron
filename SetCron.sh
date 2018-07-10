@@ -3,25 +3,28 @@
 ### Function to add cron entry for hourly tasks
 
 Hourly () {
+		
+	while [ 1 ]
+	do
+        echo ""
+        echo -n "Enter time in mins [00-59]: "
+        read input_time
+        echo ""
 
-	echo ""
-	echo -n "Enter time in mins [00-59]: "
-	read input_time
-	echo ""
-
-	echo $input_time | egrep "^[0-5][0-9]$" >> /dev/null
+        echo $input_time | egrep "^[0-5][0-9]$" >> /dev/null
 
         if [ $? -ne 0 ]; then
         echo "Invalid time entered !!!"
-	echo ""
-        exit 1
+        echo ""
+        continue
         fi
 
-	printf "%s * * * * %s\n" $input_time $cmd_str >> /var/spool/cron/$cron_usr
-	echo "Cron entry added successfully"
-	echo ""
+        printf "%s * * * * %s\n" $input_time $cmd_str >> /var/spool/cron/$cron_usr
+        echo "Cron entry added successfully"
+        echo ""
+	break
+	done
 }
-
 
 ### Function to add cron entry for weekly tasks
 
