@@ -72,6 +72,8 @@ Weekly () {
  
 Daily () {
 
+	while [ 1 ]
+	do
 	echo ""
         echo -n "Enter time of the day in 24 hour format [hh:mm]: "
         read input_time
@@ -82,8 +84,8 @@ Daily () {
         if [ $? -ne 0 ]; then
         echo "Invalid time entered !!!"
 	echo ""
-        exit 1
-        fi
+        continue
+	fi
 
         hh=`echo $input_time | awk -F: '{ print $1;}'`
         mm=`echo $input_time | awk -F: '{ print $2;}'`
@@ -91,6 +93,8 @@ Daily () {
         printf "%s %s * * * %s\n" $mm $hh $cmd_str >> /var/spool/cron/$cron_usr
         echo "Cron entry added successfully"
 	echo ""
+	break
+	done
 }
 
 ### Check uid of user
