@@ -30,37 +30,41 @@ Hourly () {
 
 Weekly () {
 
-	echo ""
+	while [ 1 ]
+	do
+        echo ""
         echo -n "Enter day of the week [0-6]: "
         read input_week
-	echo ""
+        echo ""
 
         echo $input_week | egrep "^[0-6]$" >> /dev/null
 
         if [ $? -ne 0 ]; then
         echo "Invalid day of the week !!!"
-	echo ""
-        exit 1
+        echo ""
+        continue
         fi
 
         echo -n "Enter time of the day in 24 hour format [hh:mm]: "
         read input_time
-	echo ""
+        echo ""
 
         echo $input_time | egrep "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" >> /dev/null
 
         if [ $? -ne 0 ]; then
         echo "Invalid time entered !!!"
-	echo ""
-        exit 1
+        echo ""
+        continue
         fi
 
         hh=`echo $input_time | awk -F: '{ print $1;}'`
         mm=`echo $input_time | awk -F: '{ print $2;}'`
 
         printf "%s %s * * %s %s\n" $mm $hh $input_week $cmd_str >> /var/spool/cron/$cron_usr
-	echo "Cron entry added successfully"
-	echo ""
+        echo "Cron entry added successfully"
+        echo ""
+	break
+	done
 }
 
 
