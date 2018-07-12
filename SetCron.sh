@@ -21,6 +21,7 @@ MainMenu () {
         ;;
 
         3) echo ""
+	   crontab -l
         ;;
 
         q) exit 1
