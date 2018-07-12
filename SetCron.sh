@@ -15,19 +15,75 @@ MainMenu () {
         case "$main_menu_choice" in
 
         1) echo ""
-        ;;
+           AddCronEntry
+	;;
 
         2) echo ""
         ;;
 
         3) echo ""
 	   crontab -l
+	   echo ""
         ;;
 
         q) exit 1
         ;;
 
         esac
+
+}
+
+
+### Add cron entry function 
+
+AddCronEntry () {
+
+	echo ""
+	echo -n "Enter the name of user to run the job: "
+	read cron_usr
+
+	cat /etc/passwd | awk -F: '{ print $1;}' | egrep "^$cron_usr$" >> /dev/null
+	
+	if [ $? -ne 0 ]; then
+	echo "user does not exist"
+	exit 1
+	fi
+
+
+	### Ask for command to be executed
+
+	echo ""
+	echo -n "Enter command string to schedule: "
+	read cmd_str
+
+	if [ ! -f $cmd_str ]; then
+	echo "command does not exist"
+	exit 1
+	fi
+
+
+	### Ask for interval
+	
+	echo ""
+	echo -n "Enter interval - hourly(h), daily(d) or weekly(w) : "
+	read interval_choice
+	
+	case "$interval_choice" in
+		
+	h) Hourly
+	   ;;
+
+	d) Daily
+ 	  ;;
+
+	w) Weekly
+	   ;;
+
+	*) echo "wrong choice !!!"
+	   exit 1
+	   ;;
+
+	esac
 
 }
 
@@ -142,53 +198,4 @@ fi
 
 MainMenu
 
-
-### Ask for user for the job to be executed
-
-echo ""
-echo -n "Enter the name of user to run the job: "
-read cron_usr
-
-cat /etc/passwd | awk -F: '{ print $1;}' | egrep "^$cron_usr$" >> /dev/null
-
-if [ $? -ne 0 ]; then
-echo "user does not exist"
-exit 1
-fi
-
-
-### Ask for command to be executed 
-
-echo ""
-echo -n "Enter command string to schedule: "
-read cmd_str
-
-if [ ! -f $cmd_str ]; then
-echo "command does not exist"
-exit 1
-fi
-
-
-### Ask for interval
-
-echo ""
-echo -n "Enter interval - hourly(h), daily(d) or weekly(w) : "
-read interval_choice
-
-case "$interval_choice" in
-
-h) Hourly
-   ;;
-
-d) Daily
-   ;;
-
-w) Weekly
-   ;;
-
-*) echo "wrong choice !!!"
-   exit 1
-   ;;
-
-esac
 
