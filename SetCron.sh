@@ -1,5 +1,36 @@
 #! /usr/bin/bash
 
+### Main menu display function
+
+MainMenu () {
+
+        clear
+        printf "\t\t\t\tSetCron utility\n\n\n\n"
+        printf " 1. Add a cron entry\n"
+        printf " 2. Delete a cron entry\n"
+        printf " 3. Display cron entries\n\n"
+        printf " Select an option [1-3,q]: "
+        read main_menu_choice
+
+        case "$main_menu_choice" in
+
+        1) echo ""
+        ;;
+
+        2) echo ""
+        ;;
+
+        3) echo ""
+        ;;
+
+        q) exit 1
+        ;;
+
+        esac
+
+}
+
+
 ### Function to add cron entry for hourly tasks
 
 Hourly () {
@@ -105,6 +136,10 @@ if [ $tmp_uid -ne 0 ]; then
 echo "This script needs to be executed with root user"
 exit 1
 fi
+
+### Display main menu
+
+MainMenu
 
 
 ### Ask for user for the job to be executed
