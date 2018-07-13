@@ -6,43 +6,47 @@ MainMenu () {
 
         clear
         printf "\t\t\t\tSetCron utility\n\n\n\n"
+
+	while [ 1 ]
+	do
+	printf "    Main Crontab menu\n\n"
+        printf "    =================\n\n"
         printf " 1. Add a cron entry\n"
         printf " 2. Delete a cron entry\n"
         printf " 3. Display cron entries\n\n"
         
-	while [ 1 ]
-	do
-	printf " Select an option [1-3,q]: "
+        printf " Select an option [1-3, q for exit]: "
         read main_menu_choice
 
         case "$main_menu_choice" in
 
         1) echo ""
            AddCronEntry
-	   break
-	   ;;
+           continue
+           ;;
 
         2) echo ""
-           break
-  	   ;;
+           continue
+           ;;
 
         3) echo ""
-	   crontab -l
-	   echo ""
-	   break
+           crontab -l
+           echo ""
+           continue
            ;;
 
-        q) exit 0
+        q) echo ""
+           exit 0
            ;;
 
-	*) echo ""
-	   echo "Please select correct option"
-	   echo ""
-  	   continue 	
+        *) echo ""
+           echo "Please select correct option"
+           echo ""
+           continue 
 
         esac
 
-	done
+        done
 }
 
 
