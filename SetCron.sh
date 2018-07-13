@@ -63,6 +63,9 @@ AddCronEntry () {
 
 
 	### Ask for interval
+
+	while [ 1 ]
+	do
 	
 	echo ""
 	echo -n "Enter interval - hourly(h), daily(d) or weekly(w) : "
@@ -71,19 +74,23 @@ AddCronEntry () {
 	case "$interval_choice" in
 		
 	h) Hourly
+	   break
 	   ;;
 
 	d) Daily
- 	  ;;
+ 	   break
+	   ;;
 
 	w) Weekly
+	   break
 	   ;;
 
 	*) echo "wrong choice !!!"
-	   exit 1
 	   ;;
 
 	esac
+
+	done
 
 }
 
